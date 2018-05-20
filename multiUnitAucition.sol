@@ -79,7 +79,7 @@ contract Auction {
         returns (bool success)
     {
         require(state == State.bidding);
-        require(_addresses.length == numberOfSlots);
+        require(_addresses.length <= numberOfSlots);
         
         // reject payments of 0 ETH
         require(msg.value != 0);
