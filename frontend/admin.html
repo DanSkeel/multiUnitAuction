@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta charset="utf-8">
+		<title>Test auction admin</title>
+		<link rel="stylesheet" href="style.css">
+		<script src="https://cdn.jsdelivr.net/gh/ethereum/web3.js/dist/web3.min.js"></script>
+		<script>
+			//# connect to contract
+			
+		</script>
+	</head>
+	<body class="_admin">
+		<div class="auctionPanel auctionPanel_admin">
+			<h1 class="auctionPanel__title">Our test auction admin panel</h1>
+			<p class="initial">
+				<button class='auctionPanel__button button auctionPanel__button_admin'
+				   onclick='
+						document.getElementsByClassName("firstStage")[0].style.display = "block";
+						document.getElementsByClassName("initial")[0].innerHTML = "The auction has started!";
+				   '>
+				Start auction
+				</button>
+			</p>
+			<p class="firstStage" style="display:none;">
+				<button class='auctionPanel__button button auctionPanel__button_admin'
+				   onclick='
+						document.getElementsByClassName("initial")[0].style.display = "none";
+						document.getElementsByClassName("secondStage")[0].style.display = "block";
+						document.getElementsByClassName("firstStage")[0].innerHTML = "The bids are finished!";
+				   '>
+				Summarize
+				</button>
+			</p>
+			<p class="secondStage" style="display:none;">
+				<button class='auctionPanel__button button auctionPanel__button_admin'
+				   onclick='
+						document.getElementsByClassName("firstStage")[0].style.display = "none";
+						document.getElementsByClassName("results")[0].style.display = "inline-block";
+						document.getElementsByClassName("secondStage")[0].innerHTML = "Final results:";
+				   '>
+				Finish
+				</button>
+			</p>
+			<div class="results" style="display:none;">
+				<table><tbody>
+					<tr><td>0x4fdef85743c7cfdf873d940127190a5cc1c99635</td><td>532</td></tr>
+					<tr><td>0x85699c73360f8d0b61c53165798413d3a98a30a6</td><td>498</td></tr>
+					<tr><td>0x48e1e60f5655b7acf06485037270c1b925e8b4ac</td><td>466</td></tr>
+					<tr><td>0xc6bb3118f00d1e5f65311eb64728df8e81c5c138</td><td>435</td></tr>
+					<tr><td>0x49a2a3ef0525e7881a14165e4f3965b8ea475a4c</td><td>433</td></tr>
+					<tr><td>0xa7811ca14b77dcbc37539ae88a543f3bfb077fdb</td><td>420</td></tr>
+					<tr><td>0xd87227d90195b0c7c2daf4ec69d55ea09c3a0db0</td><td>415</td></tr>
+					<tr><td>0x5baec9d70bc2a29e3fec75fd40f8b578b50da764</td><td>390</td></tr>
+					<tr><td>0x82fcb1862cf89a38837516e6b8d4de90a5f136e4</td><td>384</td></tr>
+					<tr><td>0xe0aa1b4ea47c735b2e8eac52a515f244e438c806</td><td>359</td></tr>
+					<tr><td>0x6f78ea694608e0f781d4e899fe72f2d00397b8b7</td><td>357</td></tr>
+					<tr><td>0x49f53eaa388aa9fb4a204b4f2eabb4084582caae</td><td>334</td></tr>
+					<tr><td>0x3e99ea807d056726145735b81ebc2c69f685e7d7</td><td>315</td></tr>
+					<tr><td>0x4a3148f98d3501ca4c9f99bce8f10be1291b5fe6</td><td>296</td></tr>
+					<tr><td>0x363bc75be26d2de2d44a913ad06488a01a807f73</td><td>289</td></tr>
+					<tr><td>0x9770e5c6ec084509bded04e5c722afd95fb8b7e8</td><td>250</td></tr>
+					<tr><td>0x0f6acfc06f90c0c35904787490cabaf087643d05</td><td>246</td></tr>
+					<tr><td>0xf82da621fd8f9e3e0739e1fa758cb4cdcc4d0235</td><td>231</td></tr>
+				</tbody></table>
+			</div>
+		</div>
+	</body>
+</html>

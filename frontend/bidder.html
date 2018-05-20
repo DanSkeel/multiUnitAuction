@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta charset="utf-8">
+		<title>Test auction</title>
+		<link rel="stylesheet" href="style.css">
+		<script src="https://cdn.jsdelivr.net/gh/ethereum/web3.js/dist/web3.min.js"></script>
+		<script>
+			//# set our contractAddress, abiJSON
+			var contractAddress = "0xdd113efdeba019edf6b3bd3bdb8755b1bd1b038b"; // test contract in Rinkeby
+			var abiJSON = `[
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "_variantId",
+				"type": "uint256"
+			}
+		],
+		"name": "vote",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "_variantId",
+				"type": "uint256"
+			}
+		],
+		"name": "getVotesCount",
+		"outputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "ballotName",
+		"outputs": [
+			{
+				"name": "",
+				"type": "string"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "_variantName",
+				"type": "string"
+			}
+		],
+		"name": "getVotesCountByName",
+		"outputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "getWinningVariantId",
+		"outputs": [
+			{
+				"name": "id",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "getWinningVariantVotesCount",
+		"outputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "variants",
+		"outputs": [
+			{
+				"name": "",
+				"type": "string"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "_variantName",
+				"type": "string"
+			}
+		],
+		"name": "voteByName",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "getWinningVariantName",
+		"outputs": [
+			{
+				"name": "",
+				"type": "string"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "",
+				"type": "address"
+			}
+		],
+		"name": "isVoted",
+		"outputs": [
+			{
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"payable": true,
+		"stateMutability": "payable",
+		"type": "constructor"
+	}
+]`;
+			var abi = JSON.parse(abiJSON);
+			var contract = web3.eth.contract(abi);
+			var stringHolder = contract.at(contractAddress);
+			//stringHolder.getVotesCount(0,console.log);
+			
+			// test connection
+			//# unlike in console, throws "invalid address", should we listen to some "load" event?
+			/*try {
+				var myAddress = "0x8E38F5154cFcF6615CBaCb894E572697C7389210";
+				web3.eth.getBalance(web3.eth.accounts[0],function(error,result){
+					console.log(web3.fromWei(result.toNumber()));
+				});
+			} catch(e) {
+				console.log('failed to get balance:',e)
+			}*/
+			
+			//# add callback wrapper to convert arguments into something plain?
+			var pseudoBidAttempts = 0;
+			function setMyBid(callback) {
+			// no arguments since the bid amount is set in ether through a wallet
+				
+				//# test stringHolder.bid(callback); instead of
+				// for demo:
+				// display the bid fields:
+				callback(null,1);
+				// increase bid amount:
+				var bidMsg = document.getElementsByClassName("bidValue")[0];
+				bidMsg.textContent = parseInt(bidMsg.textContent) + parseInt(Math.random()*100);
+				// emulate winning bid:
+				var msgNoWin = document.getElementsByClassName("nonWinning")[0];
+				if(msgNoWin) {
+					msgNoWin.textContent = "Winning"; msgNoWin.className = "winning";
+				}
+				// emulate other bids by showing that we're not winning:
+				if(pseudoBidAttempts < 3) {
+					pseudoBidAttempts++;
+					setTimeout('var msgElement = document.getElementsByClassName("winning")[0];'+
+						'msgElement.textContent = "not winning"; msgElement.className = "nonWinning"',
+						3000 + 2000 * Math.random());
+				}
+			}
+			function getMyBid(callback) {
+			
+				//# test stringHolder.myBid(callback);
+			}
+			function isMyBidWinning(callback) {
+			
+				//# test stringHolder.amIWinning(callback);
+			}
+			/* our methods will be:
+			 - stringHolder.bid
+			 - stringHolder.myBid
+			 - stringHolder.amIWinning
+			 */
+		</script>
+	</head>
+	<body>
+		<div class="auctionPanel">
+			<h1 class="auctionPanel__title">Welcome<br>to our test auction</h1>
+			<button class='auctionPanel__button button' onclick='setMyBid(function(e,r){
+				if(!e) {
+					var messageElements = document.getElementsByClassName("auctionPanel__yourBid");
+					for(var i = 0; i < messageElements.length; i++)
+						messageElements[i].style.display = "block";
+				}
+			});'>
+				Make <span class="mockup">[rise]</span> your bid!
+				</button>
+			<p class="auctionPanel__yourBid">Your bid: <span class="bidValue">10</span></p>
+			<p class="auctionPanel__yourBid"><span class="mockup">[Wait, ]</span>Your bid is <span class="winning">Winning</span>!</p>
+		</div>
+		<script>
+			//# setInterval('/* update bid and winning status */',1000);
+		</script>
+	</body>
+</html>

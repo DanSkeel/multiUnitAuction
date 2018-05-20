@@ -1,0 +1,68 @@
+@import url('https://fonts.googleapis.com/css?family=Audiowide');
+	
+html {
+	font-size: 24px;
+	font-family: 'Audiowide', cursive;
+}
+body {
+	height: 100vh; margin: 0; padding: 0;
+	display: flex;
+	align-items: center;
+	background: red;
+}
+body._admin {
+	background: black;
+}
+.auctionPanel {
+	width: 40rem;
+	max-width: 100%;
+	/* horizontal align center */
+	margin: 0 auto;
+	
+	text-align: center;
+	padding: 0 1rem 1rem;
+	background: yellow;
+}
+.auctionPanel_admin {
+	background: #4444ff;
+}
+
+.auctionPanel__title {
+	font-size: 2rem;
+}
+
+.button {
+	cursor: pointer;
+}
+.auctionPanel__button {
+	font-family: inherit;
+	font-size: 1rem;
+	padding: 0.5em 1em;
+	background: orange; border: none;
+}
+.auctionPanel__button:focus {
+	outline: none;
+}
+.auctionPanel__button_admin {
+	background: #00ff00;
+}
+
+.auctionPanel__yourBid {
+	display: none;
+}
+
+.winning {
+	color: green;
+}
+.nonWinning {
+	color: red;
+}
+
+.mockup {
+	display: none;
+	color: gray;
+}
+
+td {
+	padding-left: 1em; padding-right: 1em;
+}
